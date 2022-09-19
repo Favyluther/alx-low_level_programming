@@ -1,23 +1,16 @@
 #include "main.h"
-
 /**
- * _puts - prints string
- * @str: input string
- * Return: nothing
+ *_puts - prints a string, to stdout
+ *@str: value to be evaluate.
+ *Return: Always 0 (Success)
  */
 
 void _puts(char *str)
 {
-	int counter = 0;
-
-	while (counter >= 0)
+int c;
+	for (c = 0; str[c] != 0; c++)
 	{
-		if (str[counter] == '\0')
-		{
-			_putchar('\n');
-			break;
-		}
-		_putchar(str[counter]);
-		counter++;
+		putchar(str[c]);
 	}
+	putchar('\n');
 }
