@@ -96,4 +96,7 @@ char **strtow(char *str)
 			words[w][c] = word[c];
 		words[w][c] = '\0';
 		word = nextword(word + length);
-
+	}
+	words[w] = NULL;
+	return (words);
+}
