@@ -1,58 +1,55 @@
 #include "search_algos.h"
-
-int recurse_helper(int *array, size_t left, size_t right, int value);
+#include <stdio.h>
 
 /**
- * binary_search - search for value in array of sorted ints
- * @array: array to search
- * @size: size of array
- * @value: value to search
+ * print_array - print an array of integers
  *
- * Return: index of found value; or -1 if not found
+ * @array: the array to print
+ * @size: the size of the array
+ *
+ * Return: nothing!
  */
-int binary_search(int *array, size_t size, int value)
+void print_array(int *array, size_t size)
 {
-	if (array == NULL)
-		return (-1);
+	size_t i;
 
-	return (recurse_helper(array, 0, size - 1, value));
+	if (!(array && size))
+		return;
+
+	for (i = 0; i < size - 1; i++)
+		printf("%i, ", array[i]);
+	printf("%i\n", array[i]);
 }
 
 /**
- * recurse_helper - recursive implement of binary search
- * @array: array to search
- * @left: leftmost index
- * @right: rightmost index
- * @value: value to search
+ * binary_search - helper function to perform binary search
  *
- * Return: index of found value; or -1 if not found
+ * @array: array of integers
+ * @size: size of array
+ * @value: value to search for
+ *
+ * Return: the index at which @vaoue was found or -1 if it wasn't found.
  */
-int recurse_helper(int *array, size_t left, size_t right, int value)
+int binary_search(int *array, size_t size, int value)
 {
-	size_t i = left, mid;
+	size_t mid;
+	int mid_val, index;
 
-	if (left > right)
+	if (size == 0)
 		return (-1);
 
-	/* print search progress */
-	printf("Searching in array: %d", array[i++]);
-	while (i <= right)
-		printf(", %d", array[i++]);
-	printf("\n");
+	printf("Searching in array: ");
+	print_array(array, size);
+	mid = (size - 1) / 2;
+	mid_val = array[mid];
 
-	/* calculate mid */
-	mid = left + ((right - left) / 2);
-
-	/* check if mid is value */
-	if (array[mid] == value)
+	if (value == mid_val)
 		return (mid);
-	else if (array[mid] > value)
-	{
-		if (mid != 0)
-			return (recurse_helper(array, left, mid - 1, value));
-		else
-			return (-1);
-	}
-	else
-		return (recurse_helper(array, mid + 1, right, value));
+	else if (value < mid_val)
+		return (binary_search(array, size - (mid + 2), value));
+	index = binary_search(
+		array + mid + 1, size - (mid + 1), value);
+	if (index > -1)
+		return ((mid + 1) + index);
+	return (-1);
 }
